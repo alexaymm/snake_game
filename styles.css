@@ -35,6 +35,24 @@ h1 {
   margin: 0 0 0.5rem 0;
 }
 
+.difficulty-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.difficulty-selector select {
+  background: #313244;
+  color: var(--text);
+  border: 1px solid var(--wall);
+  border-radius: 6px;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
 .hud {
   display: flex;
   gap: 1.5rem;

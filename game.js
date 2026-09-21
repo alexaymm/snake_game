@@ -5,7 +5,11 @@
   const INITIAL_HALF_SIZE = 5; // starting playable area is (2*5+1) = 11 cells wide/tall
   const EXPAND_STEP = 2; // cells added on each side per expansion
   const FOODS_PER_EXPANSION = 3;
-  const TICK_MS = 120;
+  const SPEEDS_MS = {
+    beginner: 200,
+    normal: 150,
+    expert: 120,
+  };
 
   const canvas = document.getElementById("game-canvas");
   const ctx = canvas.getContext("2d");
@@ -19,6 +23,13 @@
   const overlayTitleEl = document.getElementById("overlay-title");
   const overlayMessageEl = document.getElementById("overlay-message");
   const restartBtn = document.getElementById("restart-btn");
+  const difficultySelect = document.getElementById("difficulty");
+
+  const DIFFICULTY_KEY = "snake-difficulty";
+  const savedDifficulty = localStorage.getItem(DIFFICULTY_KEY);
+  if (savedDifficulty && SPEEDS_MS[savedDifficulty]) {
+    difficultySelect.value = savedDifficulty;
+  }
 
   const BEST_SCORE_KEY = "snake-best-score";
   let bestScore = Number(localStorage.getItem(BEST_SCORE_KEY)) || 0;
@@ -93,7 +104,8 @@
     updateHud();
     overlayEl.classList.add("hidden");
     if (loopHandle) clearInterval(loopHandle);
-    loopHandle = setInterval(tick, TICK_MS);
+    const tickMs = SPEEDS_MS[difficultySelect.value] || SPEEDS_MS.normal;
+    loopHandle = setInterval(tick, tickMs);
   }
 
   function placeFood() {
@@ -229,6 +241,11 @@
   });
 
   restartBtn.addEventListener("click", resetGame);
+
+  difficultySelect.addEventListener("change", () => {
+    localStorage.setItem(DIFFICULTY_KEY, difficultySelect.value);
+    resetGame();
+  });
 
   resetGame();
   render();

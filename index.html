@@ -10,6 +10,15 @@
   <div class="game-wrapper">
     <h1>🐍 Snake Game</h1>
 
+    <div class="difficulty-selector">
+      <label for="difficulty">Nivel de experiencia:</label>
+      <select id="difficulty">
+        <option value="beginner">Principiante</option>
+        <option value="normal" selected>Normal</option>
+        <option value="expert">Experto</option>
+      </select>
+    </div>
+
     <div class="hud">
       <div class="hud-item">Puntaje: <span id="score">0</span></div>
       <div class="hud-item">Comidas para expandir: <span id="until-expand">3</span></div>
