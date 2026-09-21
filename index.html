@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="game-wrapper">
+    <h1>🐍 Snake Game</h1>
+
+    <div class="hud">
+      <div class="hud-item">Puntaje: <span id="score">0</span></div>
+      <div class="hud-item">Comidas para expandir: <span id="until-expand">3</span></div>
+      <div class="hud-item">Mejor puntaje: <span id="best-score">0</span></div>
+    </div>
+
+    <div class="board-container">
+      <canvas id="game-canvas"></canvas>
+      <div id="overlay" class="overlay hidden">
+        <h2 id="overlay-title">¡Juego terminado!</h2>
+        <p id="overlay-message"></p>
+        <button id="restart-btn">Jugar de nuevo</button>
+      </div>
+    </div>
+
+    <p class="instructions">
+      Usa las flechas o WASD para moverte. Come para crecer; el espacio se
+      amplía cada 3 alimentos. ¡No te muerdas a ti mismo ni choques contra
+      el borde!
+    </p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
