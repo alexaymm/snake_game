@@ -231,13 +231,18 @@
     });
   }
 
+  function trySetDirection(dir) {
+    if (!dir) return;
+    // Prevent reversing directly into itself
+    if (dir.x === -direction.x && dir.y === -direction.y) return;
+    nextDirection = dir;
+  }
+
   window.addEventListener("keydown", (e) => {
     const dir = DIRS[e.key];
     if (!dir) return;
     e.preventDefault();
-    // Prevent reversing directly into itself
-    if (dir.x === -direction.x && dir.y === -direction.y) return;
-    nextDirection = dir;
+    trySetDirection(dir);
   });
 
   restartBtn.addEventListener("click", resetGame);
@@ -246,6 +251,72 @@
     localStorage.setItem(DIFFICULTY_KEY, difficultySelect.value);
     resetGame();
   });
+
+  // Touch: on-screen D-pad
+  const DIR_BY_NAME = {
+    up: DIRS.ArrowUp,
+    down: DIRS.ArrowDown,
+    left: DIRS.ArrowLeft,
+    right: DIRS.ArrowRight,
+  };
+  document.querySelectorAll(".touch-btn").forEach((btn) => {
+    btn.addEventListener(
+      "touchstart",
+      (e) => {
+        e.preventDefault();
+        trySetDirection(DIR_BY_NAME[btn.dataset.dir]);
+      },
+      { passive: false }
+    );
+    btn.addEventListener("click", () => {
+      trySetDirection(DIR_BY_NAME[btn.dataset.dir]);
+    });
+  });
+
+  // Touch: swipe on the board
+  const SWIPE_THRESHOLD = 20;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  canvas.addEventListener(
+    "touchstart",
+    (e) => {
+      const t = e.touches[0];
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+    },
+    { passive: true }
+  );
+
+  canvas.addEventListener(
+    "touchmove",
+    (e) => {
+      e.preventDefault();
+    },
+    { passive: false }
+  );
+
+  canvas.addEventListener(
+    "touchend",
+    (e) => {
+      const t = e.changedTouches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+      if (Math.abs(dx) < SWIPE_THRESHOLD && Math.abs(dy) < SWIPE_THRESHOLD) {
+        return;
+      }
+      const dir =
+        Math.abs(dx) > Math.abs(dy)
+          ? dx > 0
+            ? DIRS.ArrowRight
+            : DIRS.ArrowLeft
+          : dy > 0
+          ? DIRS.ArrowDown
+          : DIRS.ArrowUp;
+      trySetDirection(dir);
+    },
+    { passive: true }
+  );
 
   resetGame();
   render();
