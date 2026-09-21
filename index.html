@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="game-wrapper">
+    <h1>🐍 Snake Game</h1>
+
+    <div class="difficulty-selector">
+      <label for="difficulty">Nivel de experiencia:</label>
+      <select id="difficulty">
+        <option value="beginner">Principiante</option>
+        <option value="normal" selected>Normal</option>
+        <option value="expert">Experto</option>
+      </select>
+    </div>
+
+    <div class="hud">
+      <div class="hud-item">Puntaje: <span id="score">0</span></div>
+      <div class="hud-item">Comidas para expandir: <span id="until-expand">3</span></div>
+      <div class="hud-item">Mejor puntaje: <span id="best-score">0</span></div>
+    </div>
+
+    <div class="board-container">
+      <canvas id="game-canvas"></canvas>
+      <div id="overlay" class="overlay hidden">
+        <h2 id="overlay-title">¡Juego terminado!</h2>
+        <p id="overlay-message"></p>
+        <button id="restart-btn">Jugar de nuevo</button>
+      </div>
+    </div>
+
+    <div class="touch-controls">
+      <button class="touch-btn up" data-dir="up" aria-label="Arriba">▲</button>
+      <button class="touch-btn left" data-dir="left" aria-label="Izquierda">◀</button>
+      <button class="touch-btn down" data-dir="down" aria-label="Abajo">▼</button>
+      <button class="touch-btn right" data-dir="right" aria-label="Derecha">▶</button>
+    </div>
+
+    <p class="instructions">
+      Usa las flechas, WASD, los botones o desliza el dedo sobre el tablero
+      para moverte. Come para crecer; el espacio se amplía cada 3 alimentos.
+      ¡No te muerdas a ti mismo ni choques contra el borde!
+    </p>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
